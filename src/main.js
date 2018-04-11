@@ -10,7 +10,7 @@ import moment from 'vue-moment'
 
 Vue.use(cookies)
 Vue.use(moment)
-
+require('./assets/reset')
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 /* eslint-disable no-new */
