@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <div class="app-shell app-shell-bottom-navigation">
-      <my-header class="app-cell-header" :title="cellHeaderTitle"></my-header>
+      <my-header class="app-shell-header" :title="cellHeaderTitle"></my-header>
       <div class="app-view-wrapper">
 
       </div>
-      <my-footer class="app-cell-footer"></my-footer>
+      <my-footer @handleClick.stop="footerHandleClick" class="app-bottom-navigator-wrapper app-shell-footer"></my-footer>
     </div>
   </div>
 </template>
@@ -21,6 +21,11 @@ export default {
       header: true,
       cellHeaderTitle: '分类'
     }
+  },
+  methods: {
+    footerHandleClick (val) {
+      console.log(val)
+    }
   }
 }
 </script>
@@ -33,7 +38,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 #app, body, html {
   height: 100%;
@@ -41,7 +45,7 @@ export default {
 }
 </style>
 <style scoped lang="less" rel="stylesheet/less">
-  .app-cell {
+  .app-shell {
     position: absolute;
     top: 0;
     right: 0;
@@ -50,7 +54,7 @@ export default {
     width: 100%;
     height: 100%;
     z-index: 1;
-    .app-cell-header {
+    .app-shell-header {
       position: fixed;
       z-index: 9999;
       top: 0;
@@ -65,7 +69,16 @@ export default {
       max-width: 7.2rem;
       margin: 0 auto;
     }
-    .app-cell-footer {
+    .app-bottom-navigator-wrapper {
+      height: 52px;
+      background: #fff;
+      -webkit-transition: -webkit-transform .2s ease-out;
+      transition: -webkit-transform .2s ease-out;
+      transition: transform .2s ease-out;
+      transition: transform .2s ease-out,-webkit-transform .2s ease-out;
+      box-shadow: 0 3px 14px 2px rgba(0,0,0,.12);
+    }
+    .app-shell-footer {
       position: fixed;
       z-index: 9999;
       bottom: 0;
