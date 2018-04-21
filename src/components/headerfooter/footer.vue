@@ -33,8 +33,30 @@ export default {
   methods: {
     handleClick (val) {
       // console.log(val)
+      if (this.isActive === val) {
+        return
+      }
       this.isActive = val
-      this.$emit('handleClick', val)
+      let name = '/'
+      switch (val) {
+        case 1:
+          name = '/'
+          break
+        case 2:
+          name = '/'
+          break
+        case 3:
+          name = '/'
+          break
+        case 4:
+          name = '/'
+          break
+        default:
+          name = '/'
+      }
+      this.$router.push({path: name})
+      // console.log(this.$route)
+      console.log(this.$router)
     }
   }
 }

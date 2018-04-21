@@ -5,7 +5,7 @@
       <div class="app-view-wrapper">
 
       </div>
-      <my-footer @handleClick.stop="footerHandleClick" class="app-bottom-navigator-wrapper app-shell-footer"></my-footer>
+      <my-footer class="app-bottom-navigator-wrapper app-shell-footer"></my-footer>
     </div>
   </div>
 </template>
@@ -23,9 +23,6 @@ export default {
     }
   },
   methods: {
-    footerHandleClick (val) {
-      console.log(val)
-    }
   }
 }
 </script>
