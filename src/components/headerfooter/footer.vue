@@ -3,19 +3,19 @@
 <template>
 <footer>
   <div class="box-flex fill-height align-items-center">
-    <a class="flex" :class="{on: isActive === 1}" @click="handleClick(1)">
+    <a class="flex" :class="{on: isRouterPath === '/'}" @click="handleClick('/')">
       <i class="app-bottom-icon iconfont icon-zhuye"></i>
       <span>首页</span>
     </a>
-    <a class="flex" :class="{on: isActive === 2}" @click="handleClick(2)">
+    <a class="flex" :class="{on: isRouterPath === '/category'}" @click="handleClick('/category')">
       <i class="app-bottom-icon iconfont icon-fenlei"></i>
       <span>分类</span>
     </a>
-    <a class="flex" :class="{on: isActive === 3}" @click="handleClick(3)">
+    <a class="flex" :class="{on: isRouterPath === '/cart'}" @click="handleClick('/cart')">
       <i class="app-bottom-icon iconfont icon-cart_icon"></i>
       <span>购物车</span>
     </a>
-    <a class="flex" :class="{on: isActive === 4}" @click="handleClick(4)">
+    <a class="flex" :class="{on: isRouterPath === '/user'}" @click="handleClick('/user')">
       <i class="app-bottom-icon iconfont icon-wode"></i>
       <span>我的</span>
     </a>
@@ -27,36 +27,19 @@
 export default {
   data () {
     return {
-      isActive: 1
+      isRouterPath: '/'
     }
   },
   methods: {
     handleClick (val) {
       // console.log(val)
-      if (this.isActive === val) {
+      if (this.isRouterPath === val) {
         return
       }
-      this.isActive = val
-      let name = '/'
-      switch (val) {
-        case 1:
-          name = '/'
-          break
-        case 2:
-          name = '/'
-          break
-        case 3:
-          name = '/'
-          break
-        case 4:
-          name = '/'
-          break
-        default:
-          name = '/'
-      }
-      this.$router.push({path: name})
+      this.$router.push({path: val})
+      this.isRouterPath = val
       // console.log(this.$route)
-      console.log(this.$router)
+      // console.log(this.$router)
     }
   }
 }

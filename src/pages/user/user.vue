@@ -1,7 +1,8 @@
-<!--Created by win10 on 2018/4/11.-->
+<!--Created by win10 on 2018/4/22.-->
 
 <template>
-<div class="container">
+<div class="user">
+
 </div>
 </template>
 
@@ -14,7 +15,7 @@ export default {
 </script>
 
 <style lang="less" rel="stylesheet/less" scoped>
-  .container {
-    background-color: red;
-  }
+.user {
+  background-color: blue;
+}
 </style>

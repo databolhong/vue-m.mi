@@ -3,7 +3,13 @@
     <div class="app-shell app-shell-bottom-navigation">
       <my-header class="app-shell-header" :title="cellHeaderTitle"></my-header>
       <div class="app-view-wrapper">
-
+        <transition name="slide"
+                    :enter-class="enter"
+                    :enter-active-class="enterActive"
+                    :leave-class="leave"
+                    :leave-active-class="leaveActive">
+          <router-view :class="{'app-view': appView, 'app-view-with-footer': appViewWithFooter}"></router-view>
+        </transition>
       </div>
       <my-footer class="app-bottom-navigator-wrapper app-shell-footer"></my-footer>
     </div>
@@ -19,11 +25,21 @@ export default {
   data () {
     return {
       header: true,
-      cellHeaderTitle: '分类'
+      cellHeaderTitle: '分类',
+      enter: '',
+      enterActive: '',
+      leave: '',
+      leaveActive: '',
+      appView: true,
+      appViewWithFooter: true
     }
   },
-  methods: {
-  }
+  watch: {
+    '$route' (to, from) {
+      console.log(to, from)
+    }
+  },
+  methods: {}
 }
 </script>
 
@@ -65,6 +81,27 @@ export default {
       height: 100%;
       max-width: 7.2rem;
       margin: 0 auto;
+      .app-view {
+        position: absolute;
+        z-index: 999;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-transition: -webkit-transform .4s cubic-bezier(.55,0,.1,1);
+        transition: -webkit-transform .4s cubic-bezier(.55,0,.1,1);
+        transition: transform .4s cubic-bezier(.55,0,.1,1);
+        transition: transform .4s cubic-bezier(.55,0,.1,1),-webkit-transform .4s cubic-bezier(.55,0,.1,1);
+        will-change: transform;
+        /*background: #fff;*/
+        color: #3c3c3c;
+        &.app-view-with-footer {
+          padding-bottom: 52px;
+        }
+      }
     }
     .app-bottom-navigator-wrapper {
       height: 52px;
