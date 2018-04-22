@@ -37,9 +37,37 @@ export default {
   watch: {
     '$route' (to, from) {
       console.log(to, from)
+      let road = from.name + '/' + to.name
+      switch (road) {
+        case 'index/category':
+          this.slideLeftLeave()
+          this.slideRightEnter()
+          break
+        case 'category/index':
+          this.slideLeftEnter()
+          this.slideRightLeave()
+          break
+      }
     }
   },
-  methods: {}
+  methods: {
+    slideLeftEnter () {
+      this.enter = 'slide-left-enter'
+      this.enterActive = 'slide-left-enter-active'
+    },
+    slideRightEnter () {
+      this.enter = 'slide-right-enter'
+      this.enterActive = 'slide-right-enter-active'
+    },
+    slideLeftLeave () {
+      this.leave = 'slide-left-leave'
+      this.leaveActive = 'slide-left-leave-active'
+    },
+    slideRightLeave () {
+      this.leave = 'slide-right-leave'
+      this.leaveActive = 'slide-right-leave-active'
+    }
+  }
 }
 </script>
 
@@ -95,12 +123,41 @@ export default {
         transition: -webkit-transform .4s cubic-bezier(.55,0,.1,1);
         transition: transform .4s cubic-bezier(.55,0,.1,1);
         transition: transform .4s cubic-bezier(.55,0,.1,1),-webkit-transform .4s cubic-bezier(.55,0,.1,1);
+        transition: left .4s cubic-bezier(.55,0,.1,1);
         will-change: transform;
         /*background: #fff;*/
         color: #3c3c3c;
         &.app-view-with-footer {
           padding-bottom: 52px;
         }
+      }
+      .slide-left-enter {
+        /*left: -7.2rem;*/
+        transform: translate(-7.2rem, 0);
+      }
+      .slide-left-enter-active {
+        transform: translate(0, 0);
+      }
+      .slide-left-leave {
+        left: 0;
+      }
+      .slide-left-leave-active {
+        /*left: -7.2rem;*/
+        transform: translate(-7.2rem, 0);
+      }
+      .slide-right-enter {
+        /*left: 7.2rem;*/
+        transform: translate(7.2rem, 0);
+      }
+      .slide-right-enter-active {
+        left: 0;
+      }
+      .slide-right-leave {
+        left: 0;
+      }
+      .slide-right-leave-active {
+        transform: translate(7.2rem, 0);
+        /*left: 7.2rem;*/
       }
     }
     .app-bottom-navigator-wrapper {
