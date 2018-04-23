@@ -1,17 +1,21 @@
 <template>
   <div id="app">
     <div class="app-shell app-shell-bottom-navigation">
-      <my-header class="app-shell-header" :title="cellHeaderTitle"></my-header>
+      <transition name="miHeader">
+        <my-header class="app-shell-header" v-show="appViewWithHeader" :title="cellHeaderTitle"></my-header>
+      </transition>
       <div class="app-view-wrapper">
         <transition name="slide"
                     :enter-class="enter"
                     :enter-active-class="enterActive"
                     :leave-class="leave"
                     :leave-active-class="leaveActive">
-          <router-view :class="{'app-view': appView, 'app-view-with-footer': appViewWithFooter}"></router-view>
+          <router-view :class="{'app-view': appView, 'app-view-with-footer': appViewWithFooter, 'app-view-with-header': appViewWithHeader}"></router-view>
         </transition>
       </div>
-      <my-footer class="app-bottom-navigator-wrapper app-shell-footer"></my-footer>
+      <transition>
+        <my-footer v-show="appViewWithFooter" class="app-bottom-navigator-wrapper app-shell-footer"></my-footer>
+      </transition>
     </div>
   </div>
 </template>
@@ -31,22 +35,53 @@ export default {
       leave: '',
       leaveActive: '',
       appView: true,
-      appViewWithFooter: true
+      appViewWithFooter: true,
+      appViewWithHeader: true
     }
   },
   watch: {
     '$route' (to, from) {
-      console.log(to, from)
+      // console.log(to, from)
       let road = from.name + '/' + to.name
+      if (to.name === 'category' || to.name === 'cart') {
+        this.appViewWithHeader = true
+        if (to.name === 'cart') {
+          this.cellHeaderTitle = '购物车'
+        } else {
+          this.cellHeaderTitle = '分类'
+        }
+      } else {
+        this.appViewWithHeader = false
+      }
+      if (!from.name) {
+        return
+      }
       switch (road) {
         case 'index/category':
-          this.slideLeftLeave()
+        case 'index/cart':
+        case 'cart/user':
           this.slideRightEnter()
+          this.slideLeftLeave()
           break
         case 'category/index':
+        case 'user/cart':
+        case 'cart/index':
+        case 'category/cart':
           this.slideLeftEnter()
           this.slideRightLeave()
           break
+        case 'cart/category':
+        case 'user/index':
+          this.slideLeftLeave()
+          this.slideLeftEnter()
+          break
+        case 'index/user':
+          this.slideRightEnter()
+          this.slideRightLeave()
+          break
+        default:
+          this.slideRightEnter()
+          this.slideLeftLeave()
       }
     }
   },
@@ -102,6 +137,12 @@ export default {
       left: 0;
       right: 0;
     }
+    .miHeader-enter {
+      transform: translate(0, -50px);
+    }
+    .miHeader-leave-active {
+      transform: translate(0, -50px);
+    }
     .app-view-wrapper {
       position: relative;
       overflow: hidden;
@@ -123,10 +164,12 @@ export default {
         transition: -webkit-transform .4s cubic-bezier(.55,0,.1,1);
         transition: transform .4s cubic-bezier(.55,0,.1,1);
         transition: transform .4s cubic-bezier(.55,0,.1,1),-webkit-transform .4s cubic-bezier(.55,0,.1,1);
-        transition: left .4s cubic-bezier(.55,0,.1,1);
         will-change: transform;
         /*background: #fff;*/
         color: #3c3c3c;
+        &.app-view-with-header {
+          padding-top: 50px;
+        }
         &.app-view-with-footer {
           padding-bottom: 52px;
         }
@@ -136,14 +179,16 @@ export default {
         transform: translate(-7.2rem, 0);
       }
       .slide-left-enter-active {
-        transform: translate(0, 0);
+        /*transform: translate(0, 0);*/
+        z-index: 0;
       }
       .slide-left-leave {
-        left: 0;
+        /*left: 0;*/
       }
       .slide-left-leave-active {
         /*left: -7.2rem;*/
         transform: translate(-7.2rem, 0);
+        z-index: 2;
       }
       .slide-right-enter {
         /*left: 7.2rem;*/
@@ -151,12 +196,14 @@ export default {
       }
       .slide-right-enter-active {
         left: 0;
+        z-index: 0;
       }
       .slide-right-leave {
         left: 0;
       }
       .slide-right-leave-active {
         transform: translate(7.2rem, 0);
+        z-index: 2;
         /*left: 7.2rem;*/
       }
     }
@@ -175,6 +222,12 @@ export default {
       bottom: 0;
       left: 0;
       right: 0;
+    }
+    .miFooter-enter {
+      transform: translate(0, 52px);
+    }
+    .miFooter-leave-active {
+      transform: translate(0, -52px);
     }
   }
 </style>

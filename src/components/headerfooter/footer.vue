@@ -30,6 +30,11 @@ export default {
       isRouterPath: '/'
     }
   },
+  watch: {
+    '$route' (to, from) {
+      this.isRouterPath = to.fullPath
+    }
+  },
   methods: {
     handleClick (val) {
       // console.log(val)

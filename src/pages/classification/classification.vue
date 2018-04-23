@@ -10,6 +10,13 @@
 export default {
   data () {
     return {}
+  },
+  beforeRouteEnter (to, from, next) {
+    // getPost(to.params.id, (err, post) => {
+    // next(vm => vm.setData(err, post))
+    // })
+    console.log(to, from)
+    next()
   }
 }
 </script>
