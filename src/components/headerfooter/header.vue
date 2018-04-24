@@ -8,7 +8,7 @@
     </a>
   </div>
   <div class="app-header-middle">
-    <div class="app-header-title">{{title}}</div>
+    <div class="app-header-title" v-text="title"></div>
   </div>
   <div class="app-header-right">
     <a class="app-header-item" @click="search">
@@ -23,7 +23,8 @@ export default {
   props: {
     title: {
       type: String,
-      required: true
+      // required: true,
+      default: '小米商城'
     }
   },
   data () {

@@ -29,7 +29,7 @@ export default {
   data () {
     return {
       header: true,
-      cellHeaderTitle: '分类',
+      cellHeaderTitle: '',
       enter: '',
       enterActive: '',
       leave: '',
@@ -41,18 +41,10 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      // console.log(to, from)
+      // console.log(this.$route, to, from)
+      console.log(to, from)
       let road = from.name + '/' + to.name
-      if (to.name === 'category' || to.name === 'cart') {
-        this.appViewWithHeader = true
-        if (to.name === 'cart') {
-          this.cellHeaderTitle = '购物车'
-        } else {
-          this.cellHeaderTitle = '分类'
-        }
-      } else {
-        this.appViewWithHeader = false
-      }
+      this.headerDecide()
       if (!from.name) {
         return
       }
@@ -85,7 +77,23 @@ export default {
       }
     }
   },
+  created () {
+    this.headerDecide()
+  },
   methods: {
+    headerDecide () {
+      let name = this.$route.name
+      if (name === 'category' || name === 'cart') {
+        this.appViewWithHeader = true
+        if (name === 'cart') {
+          this.cellHeaderTitle = '购物车'
+        } else {
+          this.cellHeaderTitle = '分类'
+        }
+      } else {
+        this.appViewWithHeader = false
+      }
+    },
     slideLeftEnter () {
       this.enter = 'slide-left-enter'
       this.enterActive = 'slide-left-enter-active'
