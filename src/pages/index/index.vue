@@ -20,13 +20,17 @@
         </div>
       </div>
     </div>
-    <ul class="nav">
-      <li v-for="(item, index) in tabs" :key="index" class="nav-item">
-        <span v-text="item.name"></span>
-      </li>
-    </ul>
+    <div style="overflow: hidden; width: 100%;">
+      <ul class="nav" :style="{scrollLeft: scrollLeft}">
+        <li v-for="(item, index) in tabs" :key="index" @click="handTabsItem(item, index)" :class="{active: tabsIndex === index}" class="nav-item">
+          <span v-text="item.name"></span>
+        </li>
+      </ul>
+    </div>
   </header>
-  <div class="pages-wrap"></div>
+  <div class="pages-wrap">
+    <div class="bodys"></div>
+  </div>
 </div>
 </template>
 
@@ -1562,7 +1566,9 @@ export default {
         },
         'result': 'ok'
       },
-      tabs: []
+      tabs: [],
+      tabsIndex: 0,
+      scrollLeft: 0
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -1576,6 +1582,10 @@ export default {
     this.getData()
   },
   methods: {
+    handTabsItem (item, index) {
+      console.log(item, index)
+      this.tabsIndex = index
+    },
     getData () {
       let data = this.ajaxDateJson
       console.log(data)
@@ -1591,7 +1601,13 @@ export default {
 <style lang="less" rel="stylesheet/less" scoped>
   .container {
     .header {
-      background-color: #f2f2f2;
+      position: fixed;
+      top: -1px;
+      left: 0;
+      right: 0;
+      z-index: 99;
+      box-shadow: 0 2px 4px -1px rgba(0,0,0,.2);
+      background: #f2f2f2;
     }
     .app-header-wrapper {
       display: flex;
@@ -1657,6 +1673,7 @@ export default {
       font-size: 0;
       white-space: nowrap;
       z-index: 2;
+      &::-webkit-scrollbar {display:none}
       .nav-item {
         font-size: 0.26rem;
         display: inline-block;
@@ -1668,11 +1685,11 @@ export default {
           border-bottom: 2px solid rgba(237,91,0,0);
           border-color: rgb(242, 242, 242);
         }
-      }
-      .nav-item-active {
-        color: rgb(237, 91, 0);
-        span {
-          border-color: rgb(237, 91, 0);
+        &.active {
+          color: rgb(237, 91, 0);
+          span {
+            border-color: rgb(237, 91, 0);
+          }
         }
       }
     }
