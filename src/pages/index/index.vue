@@ -21,8 +21,8 @@
       </div>
     </div>
     <div style="overflow: hidden; width: 100%;">
-      <ul class="nav" :style="{scrollLeft: scrollLeft}">
-        <li v-for="(item, index) in tabs" :key="index" @click="handTabsItem(item, index)" :class="{active: tabsIndex === index}" class="nav-item">
+      <ul class="nav" :ref="navIndex">
+        <li v-for="(item, index) in tabs" :key="index" @click="handTabsItem(item, index, $event)" :class="{active: tabsIndex === index}" class="nav-item">
           <span v-text="item.name"></span>
         </li>
       </ul>
@@ -1568,7 +1568,8 @@ export default {
       },
       tabs: [],
       tabsIndex: 0,
-      scrollLeft: 0
+      scrollLeft: 0,
+      navIndex: 'navIndex'
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -1582,9 +1583,21 @@ export default {
     this.getData()
   },
   methods: {
-    handTabsItem (item, index) {
-      console.log(item, index)
+    handTabsItem (item, index, ev) {
+      // console.log(item, index)
       this.tabsIndex = index
+      let ul = this.$refs[this.navIndex]
+      let limitWidth = ul.offsetWidth
+      let targetLiLeft = ev.path[1].offsetLeft
+      if (targetLiLeft <= limitWidth / 3) {
+        ul.scrollLeft = 0
+      } else if (targetLiLeft > limitWidth / 3 && targetLiLeft < limitWidth / 2) {
+        ul.scrollLeft = limitWidth / 7
+      } else if (targetLiLeft >= limitWidth / 2 && targetLiLeft < limitWidth) {
+        ul.scrollLeft = limitWidth / 3
+      } else {
+        ul.scrollRight = 0
+      }
     },
     getData () {
       let data = this.ajaxDateJson
