@@ -5,8 +5,7 @@
         <my-header class="app-shell-header" v-show="appViewWithHeader" :title="cellHeaderTitle"></my-header>
       </transition>
       <div class="app-view-wrapper">
-        <transition name="slide"
-                    :enter-class="enter"
+        <transition :enter-class="enter"
                     :enter-active-class="enterActive"
                     :leave-class="leave"
                     :leave-active-class="leaveActive">

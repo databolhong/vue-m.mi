@@ -28,9 +28,31 @@
       </ul>
     </div>
   </header>
-  <div class="pages-wrap">
-    <div class="bodys"></div>
-  </div>
+  <!--<div class="pages-wrap">-->
+    <!--<transition>-->
+      <!--<div class="index-bodys" v-show="tabsIndex === 0" key="index0">-->
+        <!--<p>index0</p>-->
+        <!--<p>index0</p>-->
+        <!--<p>index0</p>-->
+        <!--<p>index0</p>-->
+        <!--<p>index0</p>-->
+      <!--</div>-->
+    <!--</transition>-->
+  <!--</div>-->
+  <transition-group :enter-class="enter"
+                    :enter-active-class="enterActive"
+                    :leave-class="leave"
+                    :leave-active-class="leaveActive"
+                    tag="div" class="pages-wrap">
+    <div class="index-bodys" v-for="(item, index) in tabs" v-if="tabsIndex === index" :key="index">
+      <p>{{index}}</p>
+      <p>{{index}}</p>
+      <p>{{index}}</p>
+      <p>{{index}}</p>
+      <p>{{index}}</p>
+      <p>{{index}}</p>
+    </div>
+  </transition-group>
 </div>
 </template>
 
@@ -1569,7 +1591,12 @@ export default {
       tabs: [],
       tabsIndex: 0,
       scrollLeft: 0,
-      navIndex: 'navIndex'
+      navIndex: 'navIndex',
+      enter: '',
+      enterActive: '',
+      leave: '',
+      leaveActive: '',
+      bodys: 'bodys-to-left'
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -1585,6 +1612,21 @@ export default {
   methods: {
     handTabsItem (item, index, ev) {
       // console.log(item, index)
+      if (this.tabsIndex > index) {
+        // this.bodys = 'bodys-to-right'
+        this.enter = 'bodys-to-right-enter'
+        this.enterActive = 'bodys-to-right-enter-leave'
+        this.leave = 'bodys-to-right-leave'
+        this.leaveActive = 'bodys-to-right-leave-active'
+      } else if (this.tabsIndex < index) {
+        // this.bodys = 'bodys-to-left'
+        this.enter = 'bodys-to-left-enter'
+        this.enterActive = 'bodys-to-left-enter-leave'
+        this.leave = 'bodys-to-left-leave'
+        this.leaveActive = 'bodys-to-left-leave-active'
+      } else {
+        return
+      }
       this.tabsIndex = index
       let ul = this.$refs[this.navIndex]
       let limitWidth = ul.offsetWidth
@@ -1704,6 +1746,51 @@ export default {
             border-color: rgb(237, 91, 0);
           }
         }
+      }
+    }
+    .index-bodys {
+      position: absolute;
+      top: 82px;
+      left: 0;
+      right: 0;
+      background: #fff;
+      background-color: red;
+      -webkit-transition: -webkit-transform .4s cubic-bezier(.55,0,.1,1);
+      transition: -webkit-transform .4s cubic-bezier(.55,0,.1,1);
+      transition: transform .4s cubic-bezier(.55,0,.1,1);
+      transition: transform .4s cubic-bezier(.55,0,.1,1),-webkit-transform .4s cubic-bezier(.55,0,.1,1);
+
+      /*left*/
+      &.bodys-to-left-enter {
+        /*left: -7.2rem;*/
+        transform: translate(7.2rem, 0);
+      }
+      &.bodys-to-left-enter-active {
+        transform: translate(0, 0);
+      }
+      &.bodys-to-left-leave {
+        /*left: -7.2rem;*/
+        transform: translate(0, 0);
+      }
+      &.bodys-to-left-leave-active {
+        /*left: -7.2rem;*/
+        transform: translate(-7.2rem, 0);
+      }
+      /*right*/
+      &.bodys-to-right-enter {
+        /*right: -7.2rem;*/
+        transform: translate(-7.2rem, 0);
+      }
+      &.bodys-to-right-enter-active {
+        transform: translate(0, 0);
+      }
+      &.bodys-to-right-leave {
+        /*right: -7.2rem;*/
+        transform: translate(0, 0);
+      }
+      &.bodys-to-right-leave-active {
+        /*right: -7.2rem;*/
+        transform: translate(7.2rem, 0);
       }
     }
   }
