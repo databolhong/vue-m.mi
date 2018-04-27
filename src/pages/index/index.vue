@@ -28,31 +28,35 @@
       </ul>
     </div>
   </header>
-  <!--<div class="pages-wrap">-->
-    <!--<transition>-->
-      <!--<div class="index-bodys" v-show="tabsIndex === 0" key="index0">-->
-        <!--<p>index0</p>-->
-        <!--<p>index0</p>-->
-        <!--<p>index0</p>-->
-        <!--<p>index0</p>-->
-        <!--<p>index0</p>-->
-      <!--</div>-->
-    <!--</transition>-->
-  <!--</div>-->
-  <transition-group :enter-class="enter"
-                    :enter-active-class="enterActive"
-                    :leave-class="leave"
-                    :leave-active-class="leaveActive"
-                    tag="div" class="pages-wrap">
-    <div class="index-bodys" v-for="(item, index) in tabs" v-if="tabsIndex === index" :key="index">
-      <p>{{index}}</p>
-      <p>{{index}}</p>
-      <p>{{index}}</p>
-      <p>{{index}}</p>
-      <p>{{index}}</p>
-      <p>{{index}}</p>
-    </div>
-  </transition-group>
+  <div class="pages-wrap">
+    <transition :name="bodys">
+      <div class="index-bodys" v-show="tabsIndex === 0">
+        <p>index0</p>
+        <p>index0</p>
+        <p>index0</p>
+        <p>index0</p>
+        <p>index0</p>
+      </div>
+    </transition>
+    <transition :name="bodys">
+      <div class="index-bodys" v-show="tabsIndex === 1">
+       <p>index1</p>
+       <p>index1</p>
+       <p>index1</p>
+       <p>index1</p>
+       <p>index1</p>
+      </div>
+    </transition>
+    <transition :name="bodys">
+      <div class="index-bodys" v-show="tabsIndex === 2">
+        <p>index2</p>
+        <p>index2</p>
+        <p>index2</p>
+        <p>index2</p>
+        <p>index2</p>
+      </div>
+    </transition>
+  </div>
 </div>
 </template>
 
@@ -1592,10 +1596,6 @@ export default {
       tabsIndex: 0,
       scrollLeft: 0,
       navIndex: 'navIndex',
-      enter: '',
-      enterActive: '',
-      leave: '',
-      leaveActive: '',
       bodys: 'bodys-to-left'
     }
   },
@@ -1613,17 +1613,9 @@ export default {
     handTabsItem (item, index, ev) {
       // console.log(item, index)
       if (this.tabsIndex > index) {
-        // this.bodys = 'bodys-to-right'
-        this.enter = 'bodys-to-right-enter'
-        this.enterActive = 'bodys-to-right-enter-leave'
-        this.leave = 'bodys-to-right-leave'
-        this.leaveActive = 'bodys-to-right-leave-active'
+        this.bodys = 'bodys-to-right'
       } else if (this.tabsIndex < index) {
-        // this.bodys = 'bodys-to-left'
-        this.enter = 'bodys-to-left-enter'
-        this.enterActive = 'bodys-to-left-enter-leave'
-        this.leave = 'bodys-to-left-leave'
-        this.leaveActive = 'bodys-to-left-leave-active'
+        this.bodys = 'bodys-to-left'
       } else {
         return
       }
@@ -1748,6 +1740,12 @@ export default {
         }
       }
     }
+    .pages-wrap {
+      position: relative;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
     .index-bodys {
       position: absolute;
       top: 82px;
@@ -1762,34 +1760,28 @@ export default {
 
       /*left*/
       &.bodys-to-left-enter {
-        /*left: -7.2rem;*/
         transform: translate(7.2rem, 0);
       }
-      &.bodys-to-left-enter-active {
+      &.bodys-to-left-enter-to {
         transform: translate(0, 0);
       }
       &.bodys-to-left-leave {
-        /*left: -7.2rem;*/
         transform: translate(0, 0);
       }
-      &.bodys-to-left-leave-active {
-        /*left: -7.2rem;*/
+      &.bodys-to-left-leave-to {
         transform: translate(-7.2rem, 0);
       }
       /*right*/
       &.bodys-to-right-enter {
-        /*right: -7.2rem;*/
         transform: translate(-7.2rem, 0);
       }
-      &.bodys-to-right-enter-active {
+      &.bodys-to-right-enter-to {
         transform: translate(0, 0);
       }
       &.bodys-to-right-leave {
-        /*right: -7.2rem;*/
         transform: translate(0, 0);
       }
-      &.bodys-to-right-leave-active {
-        /*right: -7.2rem;*/
+      &.bodys-to-right-leave-to {
         transform: translate(7.2rem, 0);
       }
     }
