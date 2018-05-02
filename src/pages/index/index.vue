@@ -32,7 +32,7 @@
     <!--推荐-->
     <transition :name="bodys">
       <div class="index-bodys" v-show="tabsIndex === 0">
-        <main-list :Datas="mianDatas"></main-list>
+        <main-list :sections="mianDatas"></main-list>
       </div>
     </transition>
     <transition :name="bodys">
@@ -6511,6 +6511,7 @@ export default {
       let data = this.ajaxDateJson
       console.log(data)
       this.adjustTabs(data.data.tabs)
+      this.mianDatas = data.data.data.sections
     },
     adjustTabs (tabs) {
       this.tabs = tabs
