@@ -10,6 +10,13 @@
 
 <script type='text/ecmascript-6'>
 export default {
+  render (createElement) {
+    return createElement('div', {class: 'component-list-main', style: {}, attrs: {}},
+      [
+        createElement('div')
+      ]
+    )
+  },
   props: {
     sections: {
       type: Array,
