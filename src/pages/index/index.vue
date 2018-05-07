@@ -32,7 +32,7 @@
     <!--推荐-->
     <transition :name="bodys">
       <div class="index-bodys" v-show="tabsIndex === 0">
-        <main-list :sections="mianDatas"></main-list>
+        <main-list :sections="mianDatas" :defaultType="defaultType"></main-list>
       </div>
     </transition>
     <transition :name="bodys">
@@ -6470,7 +6470,8 @@ export default {
       scrollLeft: 0,
       navIndex: 'navIndex',
       bodys: 'bodys-to-left',
-      mianDatas: {}
+      mianDatas: {},
+      defaultType: ''
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -6512,6 +6513,7 @@ export default {
       console.log(data)
       this.adjustTabs(data.data.tabs)
       this.mianDatas = data.data.data.sections
+      this.defaultType = data.data.default_type
     },
     adjustTabs (tabs) {
       this.tabs = tabs
@@ -6627,7 +6629,7 @@ export default {
       left: 0;
       right: 0;
       background: #fff;
-      background-color: red;
+      /*background-color: red;*/
       -webkit-transition: -webkit-transform .4s cubic-bezier(.55,0,.1,1);
       transition: -webkit-transform .4s cubic-bezier(.55,0,.1,1);
       transition: transform .4s cubic-bezier(.55,0,.1,1);

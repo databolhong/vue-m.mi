@@ -2,26 +2,25 @@
 
 <template>
 <div class='component-list-main'>
-  <div :class="item.view_type" v-for="(item, index) in sections" :key="index" :index="index">
-    <p>{{index + item.view_type}}</p>
-  </div>
+  <renderBodys :viewBody="item" :defaultType="defaultType" v-for="(item, index) in sections" :key="index"></renderBodys>
 </div>
 </template>
 
 <script type='text/ecmascript-6'>
+import renderBodys from '../smallViewType/smallBodysRender.vue'
 export default {
-  render (createElement) {
-    return createElement('div', {class: 'component-list-main', style: {}, attrs: {}},
-      [
-        createElement('div')
-      ]
-    )
-  },
+  components: {renderBodys},
   props: {
     sections: {
       type: Array,
       default () {
         return []
+      }
+    },
+    defaultType: {
+      type: String,
+      default () {
+        return ''
       }
     }
   },
