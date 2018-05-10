@@ -11,14 +11,20 @@ export default {
         return this.cells_auto_fill(h)
       case 'divider_line':
         return this.divider_line(h)
-      case 'list_two_type1':
-        return this.list_two_type1(h)
       case 'list_action_title':
         return this.list_action_title(h)
       case 'list_one_type2':
         return this.list_one_type2(h)
       case 'list_one_type3':
         return this.list_one_type3(h)
+      case 'list_one_type12':
+        return this.list_one_type12(h)
+      case 'list_one_type14':
+        return this.list_one_type14(h)
+      case 'list_two_type1':
+        return this.list_two_type1(h)
+      case 'list_two_type13':
+        return this.list_two_type13(h)
       default:
         return ''
     }
@@ -80,63 +86,6 @@ export default {
           }
         },
         []
-      )
-    },
-    list_two_type1 (h) {
-      let viewBody = this.viewBody
-      return h('div',
-        {
-          class: {list_two_type1: true, 'box-flex': true},
-          style: {},
-          attrs: {}
-        },
-        [
-          viewBody.body.items.map((item) => {
-            return h('a',
-              {
-                class: 'exposure item',
-                attrs: {'data-log_code': item.action.log_code}
-              },
-              [
-                h('div',
-                  {class: 'img'},
-                  [
-                    h('img',
-                      {
-                        class: 'big',
-                        style: {width: '3.6rem', height: '3.6rem'},
-                        attrs: {src: item.img_url}
-                      }
-                    )
-                  ]
-                ),
-                h('div',
-                  {class: 'info'},
-                  [
-                    h('div',
-                      {class: 'name'},
-                      [item.product_name]
-                    ),
-                    h('div',
-                      {class: 'brief'},
-                      [item.product_brief]
-                    ),
-                    h('div',
-                      {
-                        class: 'price iconfont icon-renminbi1688'
-                      },
-                      [
-                        (item.product_price * 1).toFixed(0),
-                        item.show_price_qi ? h('span', {}, ['起']) : '',
-                        this.price(h, item)
-                      ]
-                    )
-                  ]
-                )
-              ]
-            )
-          })
-        ]
       )
     },
     price (h, item) {
@@ -268,6 +217,72 @@ export default {
           })
         ]
       )
+    },
+    list_one_type12 (h) {
+      return h()
+    },
+    list_one_type14 (h) {
+      return h()
+    },
+    list_two_type1 (h) {
+      let viewBody = this.viewBody
+      return h('div',
+        {
+          class: {list_two_type1: true, 'box-flex': true},
+          style: {},
+          attrs: {}
+        },
+        [
+          viewBody.body.items.map((item) => {
+            return h('a',
+              {
+                class: 'exposure item',
+                attrs: {'data-log_code': item.action.log_code}
+              },
+              [
+                h('div',
+                  {class: 'img'},
+                  [
+                    h('img',
+                      {
+                        class: 'big',
+                        style: {width: '3.6rem', height: '3.6rem'},
+                        attrs: {src: item.img_url}
+                      }
+                    )
+                  ]
+                ),
+                h('div',
+                  {class: 'info'},
+                  [
+                    h('div',
+                      {class: 'name'},
+                      [item.product_name]
+                    ),
+                    h('div',
+                      {class: 'brief'},
+                      [item.product_brief]
+                    ),
+                    h('div',
+                      {
+                        class: 'price iconfont icon-renminbi1688'
+                      },
+                      [
+                        (item.product_price * 1).toFixed(0),
+                        item.show_price_qi ? h('span', {}, ['起']) : '',
+                        this.price(h, item)
+                      ]
+                    )
+                  ]
+                )
+              ]
+            )
+          })
+        ]
+      )
+    },
+    list_two_type13 (h) {
+      return h()
     }
   }
 }
