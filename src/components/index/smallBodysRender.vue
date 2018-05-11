@@ -23,9 +23,14 @@ export default {
         return this.list_one_type14(h)
       case 'list_two_type1':
         return this.list_two_type1(h)
+      case 'list_two_type2':
+        return this.list_two_type2(h)
+      case 'list_two_type3':
+        return this.list_two_type3(h)
       case 'list_two_type13':
         return this.list_two_type13(h)
       default:
+        console.log('未匹配：：：' + this.viewBody.view_type)
         return ''
     }
   },
@@ -47,6 +52,79 @@ export default {
     return {}
   },
   methods: {
+    divider_line (h) {
+      return h('div',
+        {
+          class: {divider_line: true},
+          style: {
+            height: this.viewBody.body.line_height / 150 + 'rem',
+            borderBottom: this.viewBody.body.line_height / 150 + 'rem ' + 'solid ' + this.viewBody.body.line_color,
+            backgroundColor: this.viewBody.body.line_color
+          }
+        },
+        []
+      )
+    },
+    oldPrice (h, item) {
+      if (item.product_org_price && item.product_org_price !== item.product_price) {
+        return h('span',
+          {class: 'price old iconfont icon-renminbi1688'},
+          [
+            h('s', [(item.product_org_price * 1).toFixed(0)])
+          ]
+        )
+      }
+      return ''
+    },
+    price (h, item) {
+      return h('div',
+        {
+          class: 'price iconfont icon-renminbi1688'
+        },
+        [
+          (item.product_price * 1).toFixed(0),
+          item.show_price_qi ? h('span', {}, ['起']) : ''
+        ]
+      )
+    },
+    imgTag (h, item) {
+      let query = item.product_tag.split('?')[1]
+      let obj = {}
+      query.split('&').forEach((item, index) => {
+        obj[item.split('=')[0]] = item.split('=')[1]
+      })
+      return h('div',
+        {class: 'tag'},
+        [
+          h('img',
+            {
+              class: 'tag-icon',
+              style: {width: obj.w / 150 + 'rem', height: obj.h / 150 + 'rem'},
+              attrs: {src: item.product_tag}
+            }
+          )
+        ]
+      )
+    },
+    list_action_title (h) {
+      let viewBody = this.viewBody
+      return h('div',
+        {class: 'list_action_title box-flex'},
+        [
+          viewBody.body.items.map((item) => {
+            return h('a',
+              {
+                class: 'h exposure',
+                attrs: {'data-log_code': item.action.log_code}
+              },
+              [
+                h('div', {class: 'ti'}, [item.action_title + ' >'])
+              ]
+            )
+          })
+        ]
+      )
+    },
     cells_auto_fill (h) {
       return h('div',
         {
@@ -69,49 +147,6 @@ export default {
                     attrs: {src: item.img_url}
                   }
                 )
-              ]
-            )
-          })
-        ]
-      )
-    },
-    divider_line (h) {
-      return h('div',
-        {
-          class: {divider_line: true},
-          style: {
-            height: this.viewBody.body.line_height / 150 + 'rem',
-            borderBottom: this.viewBody.body.line_height / 150 + 'rem ' + 'solid ' + this.viewBody.body.line_color,
-            backgroundColor: this.viewBody.body.line_color
-          }
-        },
-        []
-      )
-    },
-    price (h, item) {
-      if (item.product_org_price) {
-        return h('span',
-          {class: 'price old iconfont icon-renminbi1688'},
-          [
-            h('s', [(item.product_org_price * 1).toFixed(0)])
-          ]
-        )
-      }
-      return ''
-    },
-    list_action_title (h) {
-      let viewBody = this.viewBody
-      return h('div',
-        {class: 'list_action_title box-flex'},
-        [
-          viewBody.body.items.map((item) => {
-            return h('a',
-              {
-                class: 'h exposure',
-                attrs: {'data-log_code': item.action.log_code}
-              },
-              [
-                h('div', {class: 'ti'}, [item.action_title + ' >'])
               ]
             )
           })
@@ -219,7 +254,58 @@ export default {
       )
     },
     list_one_type12 (h) {
-      return h()
+      return h('div',
+        {class: 'list_one_type12'},
+        [
+          this.viewBody.body.items.map((item) => {
+            return h('a',
+              {
+                class: 'exposure item',
+                attrs: {'data-log_code': item.action.log_code}
+              },
+              [
+                h('div',
+                  {class: 'img'},
+                  [
+                    h('img',
+                      {
+                        class: 'big',
+                        style: {width: '7.2rem', height: '3.6rem'},
+                        attrs: {src: item.img_url}
+                      }
+                    )
+                  ]
+                ),
+                h('div',
+                  {class: 'info'},
+                  [
+                    h('div',
+                      {class: 'l l1'},
+                      [
+                        h('div',
+                          {class: 'name fz-m'},
+                          [item.product_name]
+                        ),
+                        this.price(h, item)
+                      ]
+                    ),
+                    h('div',
+                      {class: 'l l2'},
+                      [
+                        h('div',
+                          {class: 'brief'},
+                          [item.product_brief]
+                        ),
+                        this.oldPrice(h, item)
+                      ]
+                    )
+                  ]
+                )
+              ]
+            )
+          })
+        ]
+      )
     },
     list_one_type14 (h) {
       return h()
@@ -249,7 +335,8 @@ export default {
                         style: {width: '3.6rem', height: '3.6rem'},
                         attrs: {src: item.img_url}
                       }
-                    )
+                    ),
+                    item.product_tag ? this.imgTag(h, item) : ''
                   ]
                 ),
                 h('div',
@@ -270,7 +357,7 @@ export default {
                       [
                         (item.product_price * 1).toFixed(0),
                         item.show_price_qi ? h('span', {}, ['起']) : '',
-                        this.price(h, item)
+                        this.oldPrice(h, item)
                       ]
                     )
                   ]
@@ -281,6 +368,8 @@ export default {
         ]
       )
     },
+    list_two_type2 () {},
+    list_two_type3 () {},
     list_two_type13 (h) {
       return h()
     }
@@ -292,6 +381,10 @@ export default {
   .component-list-main {
     img {
       display: block;
+    }
+    .img {
+      position: relative;
+      overflow: hidden;
     }
     .cells_auto_fill {
       &.multi_cell {
@@ -326,9 +419,32 @@ export default {
         }
       }
     }
+    .tag {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
     .info {
       padding: .2rem .27rem;
       text-align: left;
+      .l {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        overflow: hidden;
+        box-align: justify;
+        -webkit-box-pack: justify;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        .price.old {
+          font-size: .22rem;
+          color: rgba(0,0,0,.54);
+        }
+      }
     }
     .price {
       font-size: .28rem;
@@ -401,6 +517,13 @@ export default {
       font-size: .22rem;
       line-height: .35rem;
       color: rgba(0,0,0,.54);
+    }
+    .list_one_type12 {
+      .item {
+        position: relative;
+        width: 100%;
+        display: block;
+      }
     }
   }
 

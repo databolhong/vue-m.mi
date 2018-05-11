@@ -2,12 +2,23 @@
 
 <template>
 <div class="classification">
-
+  <div class="list-navbar">
+    <ul>
+      <li @click="selectItemsNav(index)" :class="{active: isActive === index}" v-for="(item, index) in itemsNav" :key="index">{{item.category_name}}</li>
+    </ul>
+  </div>
+  <div class="list-wrap">
+    <div v-for="(items, index) in ajaxDataJson.data" :key="index">
+      <listWrapItem :dataObj="item" v-for="(item, index) in items" :key="index"></listWrapItem>
+    </div>
+  </div>
 </div>
 </template>
 
 <script type="text/ecmascript-6">
+import listWrapItem from '../../components/category/categoryRender.vue'
 export default {
+  components: {listWrapItem},
   data () {
     return {
       ajaxDataJson: {
@@ -3288,7 +3299,9 @@ export default {
           }
         ],
         'result': 'ok'
-      }
+      },
+      itemsNav: [],
+      isActive: 1
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -3297,12 +3310,66 @@ export default {
     // })
     // console.log(to, from)
     next()
+  },
+  created () {
+    this.itemsNav = this.ajaxDataJson.data.map((item) => {
+      return {
+        'category_name': item.category_name,
+        'category_id': item.category_name
+      }
+    })
+  },
+  methods: {
+    selectItemsNav (index) {
+      this.isActive = index
+    }
   }
 }
 </script>
 
 <style lang="less" rel="stylesheet/less" scoped>
   .classification {
-    background-color: yellow;
+    .list-navbar{
+      position: fixed;
+      top: 49px;
+      bottom: 52px;
+      left: 0;
+      width: 1.52rem;
+      border-right: 1px solid #efefef;
+      overflow: hidden;
+      ul {
+        z-index: 90;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: -.3rem;
+        padding: .2rem .3rem .2rem 0;
+        background: #fefefe;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        li {
+          font-size: .34rem;
+          height: .9rem;
+          line-height: .9rem;
+          overflow: hidden;
+          text-align: center;
+          -webkit-tap-highlight-color: rgba(0,0,0,0);
+          transition: -webkit-transform .1s linear;
+          transition: transform .1s linear;
+          transition: transform .1s linear,-webkit-transform .1s linear;
+          transform-origin: center center;
+          transform: scale(.76);
+          -webkit-transition: -webkit-transform .1s linear;
+          -webkit-transform-origin: center center;
+          -webkit-transform: scale(.76);
+          &.active {
+            color: #fb7d34;
+            transform: scale(1);
+            -webkit-transform: scale(1);
+          }
+        }
+      }
+    }
   }
 </style>

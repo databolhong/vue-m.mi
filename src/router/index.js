@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
 const index = r => require.ensure([], () => r(require('../pages/index/index.vue')), 'pages')
-const category = r => require.ensure([], () => r(require('../pages/classification/classification.vue')), 'pages')
+const category = r => require.ensure([], () => r(require('../pages/category/category.vue')), 'pages')
 const cart = r => require.ensure([], () => r(require('../pages/cart/cart.vue')), 'pages')
 const user = r => require.ensure([], () => r(require('../pages/user/user.vue')), 'pages')
 

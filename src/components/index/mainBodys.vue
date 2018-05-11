@@ -7,7 +7,7 @@
 </template>
 
 <script type='text/ecmascript-6'>
-import renderBodys from '../smallViewType/smallBodysRender.vue'
+import renderBodys from './smallBodysRender.vue'
 export default {
   components: {renderBodys},
   props: {
