@@ -29,7 +29,6 @@
     </div>
   </header>
   <div class="pages-wrap">
-    <!--推荐-->
     <transition :name="bodys">
       <div class="index-bodys" v-show="tabsIndex === 0">
         <main-list :sections="mianDatas" :defaultType="defaultType"></main-list>
@@ -45,6 +44,11 @@
         <main-list :sections="mianDatas3" :defaultType="defaultType"></main-list>
       </div>
     </transition>
+    <!--<transition-group :name="bodys">-->
+      <!--<div class="index-bodys" v-for="(item, index) in " :key="index" v-show="tabsIndex === index">-->
+      <!--<main-list :sections="mianDatas3" :defaultType="defaultType"></main-list>-->
+      <!--</div>-->
+    <!--</transition-group>-->
   </div>
 </div>
 </template>
