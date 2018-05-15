@@ -9,7 +9,7 @@
   </div>
   <div class="list-wrap">
     <div v-for="(items, index) in ajaxDataJson.data" :key="index">
-      <listWrapItem :dataObj="item" v-for="(item, index) in items" :key="index"></listWrapItem>
+      <listWrapItem :dataObj="item" v-for="(item, index) in items.category_list" :key="index"></listWrapItem>
     </div>
   </div>
 </div>

@@ -1,13 +1,13 @@
 <!--Created by win10 on 2018/5/11.-->
 
-<template>
-<div>
-
-</div>
-</template>
-
 <script type="text/ecmascript-6">
 export default {
+  render (h) {
+    switch (this.dataObj.view_type) {
+      default:
+        return ''
+    }
+  },
   props: {
     dataObj: {
       type: Object,
