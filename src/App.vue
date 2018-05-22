@@ -180,6 +180,7 @@ export default {
         &.app-view-with-footer {
           padding-bottom: 52px;
         }
+        -webkit-overflow-scrolling: touch;
       }
       .slide-left-enter {
         /*left: -7.2rem;*/
