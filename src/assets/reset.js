@@ -18,7 +18,7 @@
   }
 
   if (e.addEventListener) { // 判断是否有addeventlistener方法，如果有，就绑定上面判断的o事件
-    e.addEventListener(o, a, !1)
+    n.addEventListener(o, a, !1)
     e.addEventListener('resize', a, !1)
     e.addEventListener('DOMContentLoaded', a, !1) // 绑定DOMContentLoaded事件
   }
