@@ -19,7 +19,7 @@
   </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import myHeader from './components/headerfooter/header.vue'
 import myFooter from './components/headerfooter/footer.vue'
 export default {
